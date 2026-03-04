@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { ThemeProvider } from './components/context/ThemeContext'
 import { AuthProvider, useAuth } from './components/context/AuthContext'
-import { DashboardLayout } from './components/coman/DashboardLayout.jsx'
-import DashboardPage from "./components/pages/DashboardPage/DashboardPage.jsx";
+import { DashboardLayout } from './components/coman/DashboardLayout'
+import { DashboardPage } from './components/pages/DashboardPage/DashboardPage'
+import { CustomersPage } from './components/pages/CustomersPage/CustomersPage'
 
 
 const pageTitles = {
@@ -41,6 +42,8 @@ function AppContent() {
         switch (currentPage) {
             case 'dashboard':
                 return <DashboardPage />
+            case 'customers':
+                return <CustomersPage />
             default:
                 return <DashboardPage />
         }
