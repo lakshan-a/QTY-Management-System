@@ -1,14 +1,70 @@
-import './App.css'
+import React, { useState } from 'react'
+import { ThemeProvider } from './components/context/ThemeContext'
+import { AuthProvider, useAuth } from './components/context/AuthContext'
+import { DashboardLayout } from './components/coman/DashboardLayout.jsx'
+import DashboardPage from "./components/pages/DashboardPage/DashboardPage.jsx";
 
 
-function App() {
+const pageTitles = {
+    dashboard: 'Dashboard',
+    customers: 'Customers',
+    categories: 'Categories',
+    items: 'Items',
+    wholesale: 'Wholesale',
+    couriers: 'Couriers',
+    orders: 'Orders',
+    'qty-management': 'Quantity Management',
+    returns: 'Returns',
+    payments: 'Payments',
+    damages: 'Damages',
+    users: 'User Management',
+    reports: 'Reports',
+    settings: 'Business Settings',
+    'super-dashboard': 'Super Admin Dashboard',
+    businesses: 'Businesses',
+    'all-users': 'All Users',
+    subscriptions: 'Subscriptions',
+    'super-reports': 'Reports',
+}
+
+function AppContent() {
+    const { isAuthenticated, user } = useAuth()
+    const [currentPage, setCurrentPage] = useState(() => {
+        return user?.role === 'super_admin' ? 'super-dashboard' : 'dashboard'
+    })
+
+    if (!isAuthenticated) {
+        // return <LoginPage />
+    }
+
+    const renderPage = () => {
+        switch (currentPage) {
+            case 'dashboard':
+                return <DashboardPage />
+            default:
+                return <DashboardPage />
+        }
+    }
 
     return (
-            <>
-                <h1 className="text-3xl bg-red-500">Hello</h1>
-            </>
+        <DashboardLayout
+            currentPage={currentPage}
+            pageTitle={pageTitles[currentPage] || 'Dashboard'}
+            onNavigate={setCurrentPage}
+        >
+            {renderPage()}
+        </DashboardLayout>
     )
 }
 
+export function App() {
+    return (
+        <ThemeProvider>
+            <AuthProvider>
+                <AppContent />
+            </AuthProvider>
+        </ThemeProvider>
+    )
+}
 
 export default App
