@@ -8,6 +8,7 @@ import CustomersPage from './components/pages/CustomersPage/CustomersPage';
 import LoginPage from "./components/pages/LoginPage/LoginPage.jsx";
 import CategoriesPage from "./components/pages/CategoriesPage/CategoriesPage.jsx";
 import ItemsPage from "./components/pages/ItemsPage/ItemsPage.jsx";
+import WholesalePage from "./components/pages/WholesalePage/WholesalePage.jsx";
 
 const pageTitleKeys = {
     dashboard: 'nav.dashboard',
@@ -52,6 +53,8 @@ function AppContent() {
                 return <CategoriesPage />
             case 'items':
                 return <ItemsPage />
+            case 'wholesale':
+                return <WholesalePage />
             default:
                 return <DashboardPage />;
         }
