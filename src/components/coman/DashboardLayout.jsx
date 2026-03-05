@@ -1,29 +1,29 @@
-import React, { useState } from 'react'
-import { Sidebar } from './Sidebar'
-import { Header } from './Header'
-import { MobileBottomNav } from './MobileBottomNav'
+import React, { useState } from 'react';
+import Sidebar from './Sidebar';
+import Header from './Header';
+import MobileBottomNav from './MobileBottomNav';
 
-export function DashboardLayout({
-                                    children,
-                                    currentPage,
-                                    pageTitle,
-                                    onNavigate,
-                                }) {
-    const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+const DashboardLayout = ({
+                             children,
+                             currentPage,
+                             pageTitle,
+                             onNavigate,
+                         }) => {
+    const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const handleMobileMenuOpen = () => {
-        setMobileMenuOpen(true)
-    }
+        setMobileMenuOpen(true);
+    };
 
     const handleMobileMenuClose = () => {
-        setMobileMenuOpen(false)
-    }
+        setMobileMenuOpen(false);
+    };
 
     const handleNavigate = (page) => {
-        onNavigate(page)
-        setMobileMenuOpen(false)
-    }
+        onNavigate(page);
+        setMobileMenuOpen(false);
+    };
 
     return (
         <div className="min-h-screen bg-slate-100 dark:bg-slate-900">
@@ -41,7 +41,6 @@ export function DashboardLayout({
             <div
                 className={`
           transition-all duration-300
-          ${/* No margin on mobile, margin on desktop based on collapse state */ ''}
           ml-0
           ${sidebarCollapsed ? 'lg:ml-16' : 'lg:ml-64'}
         `}
@@ -65,7 +64,7 @@ export function DashboardLayout({
                 onMenuClick={handleMobileMenuOpen}
             />
         </div>
-    )
-}
+    );
+};
 
-export default DashboardLayout
+export default DashboardLayout;

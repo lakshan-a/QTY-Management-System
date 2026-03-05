@@ -1,7 +1,5 @@
 import React, { useState, createContext, useContext } from 'react';
 
-const AuthContext = createContext(undefined);
-
 // Mock users for demo
 const mockUsers = [
     {
@@ -74,7 +72,9 @@ const rolePermissions = {
     ],
 };
 
-export function AuthProvider({ children }) {
+const AuthContext = createContext(undefined);
+
+export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(() => {
         const saved = localStorage.getItem('user');
         return saved ? JSON.parse(saved) : null;
@@ -118,14 +118,14 @@ export function AuthProvider({ children }) {
             {children}
         </AuthContext.Provider>
     );
-}
+};
 
-export function useAuth() {
+export const useAuth = () => {
     const context = useContext(AuthContext);
     if (!context) {
         throw new Error('useAuth must be used within an AuthProvider');
     }
     return context;
-}
+};
 
 export default AuthContext;

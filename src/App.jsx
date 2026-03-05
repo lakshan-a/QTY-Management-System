@@ -1,73 +1,80 @@
-import React, { useState } from 'react'
-import { ThemeProvider } from './components/context/ThemeContext'
-import { AuthProvider, useAuth } from './components/context/AuthContext'
-import { DashboardLayout } from './components/coman/DashboardLayout'
-import { DashboardPage } from './components/pages/DashboardPage/DashboardPage'
-import { CustomersPage } from './components/pages/CustomersPage/CustomersPage'
+import React, { useState } from 'react';
+import { ThemeProvider } from './components/context/ThemeContext';
+import { AuthProvider, useAuth } from './components/context/AuthContext';
+import { LanguageProvider, useLanguage } from './components/context/LanguageContext';
+import DashboardLayout from './components/coman/DashboardLayout';
+import DashboardPage from './components/pages/DashboardPage/DashboardPage';
+import CustomersPage from './components/pages/CustomersPage/CustomersPage';
+import './index.css';
+import LoginPage from "./components/pages/LoginPage/LoginPage.jsx";
 
-
-const pageTitles = {
-    dashboard: 'Dashboard',
-    customers: 'Customers',
-    categories: 'Categories',
-    items: 'Items',
-    wholesale: 'Wholesale',
-    couriers: 'Couriers',
-    orders: 'Orders',
-    'qty-management': 'Quantity Management',
-    returns: 'Returns',
-    payments: 'Payments',
-    damages: 'Damages',
-    users: 'User Management',
-    reports: 'Reports',
-    settings: 'Business Settings',
-    'super-dashboard': 'Super Admin Dashboard',
-    businesses: 'Businesses',
-    'all-users': 'All Users',
-    subscriptions: 'Subscriptions',
-    'super-reports': 'Reports',
-}
+const pageTitleKeys = {
+    dashboard: 'nav.dashboard',
+    customers: 'nav.customers',
+    categories: 'nav.categories',
+    items: 'nav.items',
+    wholesale: 'nav.wholesale',
+    couriers: 'nav.couriers',
+    orders: 'nav.orders',
+    'qty-management': 'nav.qty_management',
+    returns: 'nav.returns',
+    payments: 'nav.payments',
+    damages: 'nav.damages',
+    users: 'nav.users',
+    reports: 'nav.reports',
+    settings: 'nav.settings',
+    'super-dashboard': 'nav.dashboard',
+    businesses: 'nav.businesses',
+    'all-users': 'nav.all_users',
+    subscriptions: 'nav.subscriptions',
+    'super-reports': 'nav.reports',
+};
 
 function AppContent() {
-    const { isAuthenticated, user } = useAuth()
+    const { isAuthenticated, user } = useAuth();
+    const { t } = useLanguage();
     const [currentPage, setCurrentPage] = useState(() => {
-        return user?.role === 'super_admin' ? 'super-dashboard' : 'dashboard'
-    })
+        return user?.role === 'super_admin' ? 'super-dashboard' : 'dashboard';
+    });
 
     if (!isAuthenticated) {
-        // return <LoginPage />
+        return <LoginPage />;
     }
 
     const renderPage = () => {
         switch (currentPage) {
             case 'dashboard':
-                return <DashboardPage />
+                return <DashboardPage />;
             case 'customers':
-                return <CustomersPage />
+                return <CustomersPage />;
             default:
-                return <DashboardPage />
+                return <DashboardPage />;
         }
-    }
+    };
+
+    const titleKey = pageTitleKeys[currentPage] || 'nav.dashboard';
 
     return (
         <DashboardLayout
             currentPage={currentPage}
-            pageTitle={pageTitles[currentPage] || 'Dashboard'}
+            pageTitle={t(titleKey)}
             onNavigate={setCurrentPage}
         >
             {renderPage()}
         </DashboardLayout>
-    )
+    );
 }
 
 export function App() {
     return (
         <ThemeProvider>
-            <AuthProvider>
-                <AppContent />
-            </AuthProvider>
+            <LanguageProvider>
+                <AuthProvider>
+                    <AppContent />
+                </AuthProvider>
+            </LanguageProvider>
         </ThemeProvider>
-    )
+    );
 }
 
-export default App
+export default App;

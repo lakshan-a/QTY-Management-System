@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
     LayoutDashboardIcon,
     UsersIcon,
@@ -19,157 +19,161 @@ import {
     ChevronRightIcon,
     WarehouseIcon,
     XIcon,
-} from 'lucide-react'
-import { useAuth } from '../context/AuthContext'
+} from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 
 const businessNavItems = [
     {
         id: 'dashboard',
-        label: 'Dashboard',
+        labelKey: 'nav.dashboard',
         icon: <LayoutDashboardIcon className="w-5 h-5" />,
         permission: 'dashboard',
     },
     {
         id: 'customers',
-        label: 'Customers',
+        labelKey: 'nav.customers',
         icon: <UsersIcon className="w-5 h-5" />,
         permission: 'customers',
     },
     {
         id: 'categories',
-        label: 'Categories',
+        labelKey: 'nav.categories',
         icon: <TagIcon className="w-5 h-5" />,
         permission: 'categories',
     },
     {
         id: 'items',
-        label: 'Items',
+        labelKey: 'nav.items',
         icon: <PackageIcon className="w-5 h-5" />,
         permission: 'items',
     },
     {
         id: 'wholesale',
-        label: 'Wholesale',
+        labelKey: 'nav.wholesale',
         icon: <WarehouseIcon className="w-5 h-5" />,
         permission: 'wholesale',
     },
     {
         id: 'couriers',
-        label: 'Couriers',
+        labelKey: 'nav.couriers',
         icon: <TruckIcon className="w-5 h-5" />,
         permission: 'couriers',
     },
     {
         id: 'orders',
-        label: 'Orders',
+        labelKey: 'nav.orders',
         icon: <ShoppingCartIcon className="w-5 h-5" />,
         permission: 'orders',
     },
     {
         id: 'qty-management',
-        label: 'Qty Management',
+        labelKey: 'nav.qty_management',
         icon: <BoxIcon className="w-5 h-5" />,
         permission: 'qty_management',
     },
     {
         id: 'returns',
-        label: 'Returns',
+        labelKey: 'nav.returns',
         icon: <RotateCcwIcon className="w-5 h-5" />,
         permission: 'returns',
     },
     {
         id: 'payments',
-        label: 'Payments',
+        labelKey: 'nav.payments',
         icon: <CreditCardIcon className="w-5 h-5" />,
         permission: 'payments',
     },
     {
         id: 'damages',
-        label: 'Damages',
+        labelKey: 'nav.damages',
         icon: <AlertTriangleIcon className="w-5 h-5" />,
         permission: 'damages',
     },
     {
         id: 'users',
-        label: 'Users',
+        labelKey: 'nav.users',
         icon: <UserCogIcon className="w-5 h-5" />,
         permission: 'users',
     },
     {
         id: 'reports',
-        label: 'Reports',
+        labelKey: 'nav.reports',
         icon: <FileTextIcon className="w-5 h-5" />,
         permission: 'reports',
     },
     {
         id: 'settings',
-        label: 'Settings',
+        labelKey: 'nav.settings',
         icon: <SettingsIcon className="w-5 h-5" />,
         permission: 'settings',
     },
-]
+];
 
 const superAdminNavItems = [
     {
         id: 'super-dashboard',
-        label: 'Dashboard',
+        labelKey: 'nav.dashboard',
         icon: <LayoutDashboardIcon className="w-5 h-5" />,
         permission: '*',
     },
     {
         id: 'businesses',
-        label: 'Businesses',
+        labelKey: 'nav.businesses',
         icon: <BuildingIcon className="w-5 h-5" />,
         permission: '*',
     },
     {
         id: 'all-users',
-        label: 'All Users',
+        labelKey: 'nav.all_users',
         icon: <UsersIcon className="w-5 h-5" />,
         permission: '*',
     },
     {
         id: 'subscriptions',
-        label: 'Subscriptions',
+        labelKey: 'nav.subscriptions',
         icon: <CreditCardIcon className="w-5 h-5" />,
         permission: '*',
     },
     {
         id: 'super-reports',
-        label: 'Reports',
+        labelKey: 'nav.reports',
         icon: <FileTextIcon className="w-5 h-5" />,
         permission: '*',
     },
-]
+];
 
-export function Sidebar({
-                            currentPage,
-                            onNavigate,
-                            isCollapsed,
-                            onToggleCollapse,
-                            isMobileOpen = false,
-                            onCloseMobile,
-                        }) {
-    const { user, logout, hasPermission } = useAuth()
+const Sidebar = ({
+                     currentPage,
+                     onNavigate,
+                     isCollapsed,
+                     onToggleCollapse,
+                     isMobileOpen = false,
+                     onCloseMobile,
+                 }) => {
+    const { user, logout, hasPermission } = useAuth();
+    const { t } = useLanguage();
+
     const navItems =
-        user?.role === 'super_admin' ? superAdminNavItems : businessNavItems
+        user?.role === 'super_admin' ? superAdminNavItems : businessNavItems;
+
     const filteredItems = navItems.filter((item) =>
-        hasPermission(item.permission),
-    )
+        hasPermission(item.permission)
+    );
 
     const handleNavClick = (page) => {
-        onNavigate(page)
+        onNavigate(page);
         if (onCloseMobile) {
-            onCloseMobile()
+            onCloseMobile();
         }
-    }
+    };
 
     const handleLogout = () => {
-        logout()
+        logout();
         if (onCloseMobile) {
-            onCloseMobile()
+            onCloseMobile();
         }
-    }
+    };
 
     return (
         <>
@@ -234,7 +238,7 @@ export function Sidebar({
                         {user?.full_name}
                     </p>
                     <p className="text-xs text-slate-500 dark:text-slate-400 capitalize">
-                        {user?.role.replace('_', ' ')}
+                        {user?.role?.replace('_', ' ')}
                     </p>
                 </div>
 
@@ -256,13 +260,13 @@ export function Sidebar({
                     ${currentPage === item.id ? 'bg-blue-500 text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white active:bg-slate-200 dark:active:bg-slate-700'}
                     ${isCollapsed ? 'lg:justify-center' : ''}
                   `}
-                                    title={isCollapsed ? item.label : undefined}
+                                    title={isCollapsed ? t(item.labelKey) : undefined}
                                 >
                                     {item.icon}
                                     <span
                                         className={`text-sm font-medium ${isCollapsed ? 'lg:hidden' : ''}`}
                                     >
-                    {item.label}
+                    {t(item.labelKey)}
                   </span>
                                 </button>
                             </li>
@@ -279,19 +283,19 @@ export function Sidebar({
               text-slate-600 dark:text-slate-300 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 active:bg-red-100 dark:active:bg-red-500/20 transition-colors
               ${isCollapsed ? 'lg:justify-center' : ''}
             `}
-                        title={isCollapsed ? 'Logout' : undefined}
+                        title={isCollapsed ? t('nav.logout') : undefined}
                     >
                         <LogOutIcon className="w-5 h-5" />
                         <span
                             className={`text-sm font-medium ${isCollapsed ? 'lg:hidden' : ''}`}
                         >
-              Logout
+              {t('nav.logout')}
             </span>
                     </button>
                 </div>
             </aside>
         </>
-    )
-}
+    );
+};
 
 export default Sidebar;

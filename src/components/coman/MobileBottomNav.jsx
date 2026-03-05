@@ -6,31 +6,38 @@ import {
     UsersIcon,
     MenuIcon,
 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const navItems = [
     {
         id: 'dashboard',
-        label: 'Dashboard',
+        labelKey: 'nav.dashboard',
         icon: <LayoutDashboardIcon className="w-5 h-5" />,
     },
     {
         id: 'orders',
-        label: 'Orders',
+        labelKey: 'nav.orders',
         icon: <ShoppingCartIcon className="w-5 h-5" />,
     },
     {
         id: 'items',
-        label: 'Items',
+        labelKey: 'nav.items',
         icon: <PackageIcon className="w-5 h-5" />,
     },
     {
         id: 'customers',
-        label: 'Customers',
+        labelKey: 'nav.customers',
         icon: <UsersIcon className="w-5 h-5" />,
     },
 ];
 
-export function MobileBottomNav({ currentPage, onNavigate, onMenuClick }) {
+const MobileBottomNav = ({
+                             currentPage,
+                             onNavigate,
+                             onMenuClick,
+                         }) => {
+    const { t } = useLanguage();
+
     return (
         <nav
             className="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 lg:hidden safe-bottom"
@@ -47,18 +54,14 @@ export function MobileBottomNav({ currentPage, onNavigate, onMenuClick }) {
                             className={`
                 flex flex-col items-center justify-center flex-1 h-full px-2 py-1
                 transition-colors duration-200 no-select
-                ${
-                                isActive
-                                    ? 'text-primary-500'
-                                    : 'text-slate-500 dark:text-slate-400 active:text-primary-500'
-                            }
+                ${isActive ? 'text-primary-500' : 'text-slate-500 dark:text-slate-400 active:text-primary-500'}
               `}
-                            aria-label={item.label}
+                            aria-label={t(item.labelKey)}
                             aria-current={isActive ? 'page' : undefined}
                         >
                             {item.icon}
                             <span className="text-[10px] font-medium mt-0.5 truncate">
-                {item.label}
+                {t(item.labelKey)}
               </span>
                         </button>
                     );
@@ -71,11 +74,13 @@ export function MobileBottomNav({ currentPage, onNavigate, onMenuClick }) {
                     aria-label="Open menu"
                 >
                     <MenuIcon className="w-5 h-5" />
-                    <span className="text-[10px] font-medium mt-0.5">More</span>
+                    <span className="text-[10px] font-medium mt-0.5">
+            {t('nav.more')}
+          </span>
                 </button>
             </div>
         </nav>
     );
-}
+};
 
 export default MobileBottomNav;

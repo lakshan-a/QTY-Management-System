@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
     ShoppingCartIcon,
     PackageIcon,
@@ -12,8 +12,9 @@ import {
     BoxIcon,
     TrendingUpIcon,
     TrendingDownIcon,
-} from 'lucide-react'
-import { useAuth } from '../../context/AuthContext'
+} from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 const mockStats = {
     totalOrders: 1247,
@@ -25,7 +26,7 @@ const mockStats = {
     lowStockItems: 12,
     damagedItems: 8,
     totalRevenue: 125680,
-}
+};
 
 const recentOrders = [
     {
@@ -63,7 +64,7 @@ const recentOrders = [
         total_amount: 449.0,
         status: 'pending',
     },
-]
+];
 
 const statusColors = {
     pending:
@@ -74,9 +75,11 @@ const statusColors = {
     delivered:
         'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400',
     returned: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
-}
+};
 
-function StatCard({ title, value, icon, color, trend }) {
+const StatCard = ({ title, value, icon, color, trend }) => {
+    const { t } = useLanguage();
+
     const colors = {
         blue: 'bg-blue-500',
         green: 'bg-emerald-500',
@@ -84,7 +87,7 @@ function StatCard({ title, value, icon, color, trend }) {
         red: 'bg-red-500',
         purple: 'bg-purple-500',
         cyan: 'bg-cyan-500',
-    }
+    };
 
     return (
         <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-5">
@@ -98,7 +101,9 @@ function StatCard({ title, value, icon, color, trend }) {
                     </p>
                     {trend && (
                         <p
-                            className={`mt-1 text-sm flex items-center gap-1 ${trend.isPositive ? 'text-emerald-600' : 'text-red-600'}`}
+                            className={`mt-1 text-sm flex items-center gap-1 ${
+                                trend.isPositive ? 'text-emerald-600' : 'text-red-600'
+                            }`}
                         >
                             {trend.isPositive ? (
                                 <TrendingUpIcon className="w-4 h-4" />
@@ -107,7 +112,7 @@ function StatCard({ title, value, icon, color, trend }) {
                             )}
                             {Math.abs(trend.value)}%
                             <span className="text-slate-500 dark:text-slate-400 ml-1">
-                vs last month
+                {t('dashboard.vs_last_month')}
               </span>
                         </p>
                     )}
@@ -117,18 +122,19 @@ function StatCard({ title, value, icon, color, trend }) {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export function DashboardPage() {
-    const { hasPermission } = useAuth()
-    const showRevenue = hasPermission('revenue')
+export const DashboardPage = () => {
+    const { hasPermission } = useAuth();
+    const { t } = useLanguage();
+    const showRevenue = hasPermission('revenue');
 
     return (
         <div className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <StatCard
-                    title="Total Orders"
+                    title={t('dashboard.total_orders')}
                     value={mockStats.totalOrders.toLocaleString()}
                     icon={<ShoppingCartIcon className="w-6 h-6" />}
                     color="blue"
@@ -138,19 +144,19 @@ export function DashboardPage() {
                     }}
                 />
                 <StatCard
-                    title="Today's Orders"
+                    title={t('dashboard.todays_orders')}
                     value={mockStats.todayOrders}
                     icon={<ClockIcon className="w-6 h-6" />}
                     color="cyan"
                 />
                 <StatCard
-                    title="Pending Orders"
+                    title={t('dashboard.pending_orders')}
                     value={mockStats.pendingOrders}
                     icon={<PackageIcon className="w-6 h-6" />}
                     color="yellow"
                 />
                 <StatCard
-                    title="Delivered Orders"
+                    title={t('dashboard.delivered_orders')}
                     value={mockStats.deliveredOrders.toLocaleString()}
                     icon={<CheckCircleIcon className="w-6 h-6" />}
                     color="green"
@@ -159,13 +165,13 @@ export function DashboardPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <StatCard
-                    title="Returned Orders"
+                    title={t('dashboard.returned_orders')}
                     value={mockStats.returnedOrders}
                     icon={<RotateCcwIcon className="w-6 h-6" />}
                     color="red"
                 />
                 <StatCard
-                    title="Total Customers"
+                    title={t('dashboard.total_customers')}
                     value={mockStats.totalCustomers.toLocaleString()}
                     icon={<UsersIcon className="w-6 h-6" />}
                     color="purple"
@@ -175,13 +181,13 @@ export function DashboardPage() {
                     }}
                 />
                 <StatCard
-                    title="Low Stock Items"
+                    title={t('dashboard.low_stock_items')}
                     value={mockStats.lowStockItems}
                     icon={<BoxIcon className="w-6 h-6" />}
                     color="yellow"
                 />
                 <StatCard
-                    title="Damaged Items"
+                    title={t('dashboard.damaged_items')}
                     value={mockStats.damagedItems}
                     icon={<AlertTriangleIcon className="w-6 h-6" />}
                     color="red"
@@ -191,7 +197,7 @@ export function DashboardPage() {
             {showRevenue && (
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                     <StatCard
-                        title="Total Revenue"
+                        title={t('dashboard.total_revenue')}
                         value={`$${mockStats.totalRevenue.toLocaleString()}`}
                         icon={<DollarSignIcon className="w-6 h-6" />}
                         color="green"
@@ -207,10 +213,10 @@ export function DashboardPage() {
                 <div className="lg:col-span-2 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
                     <div className="p-4 border-b border-slate-200 dark:border-slate-700">
                         <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
-                            Recent Orders
+                            {t('dashboard.recent_orders')}
                         </h3>
                         <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-                            Latest 5 orders
+                            {t('dashboard.latest_orders')}
                         </p>
                     </div>
                     <div className="overflow-x-auto">
@@ -218,16 +224,16 @@ export function DashboardPage() {
                             <thead>
                             <tr className="border-b border-slate-200 dark:border-slate-700">
                                 <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
-                                    Order
+                                    {t('dashboard.order')}
                                 </th>
                                 <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
-                                    Customer
+                                    {t('dashboard.customer')}
                                 </th>
                                 <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
-                                    Amount
+                                    {t('dashboard.amount')}
                                 </th>
                                 <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
-                                    Status
+                                    {t('common.status')}
                                 </th>
                             </tr>
                             </thead>
@@ -262,30 +268,32 @@ export function DashboardPage() {
 
                 <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6">
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
-                        Quick Actions
+                        {t('dashboard.quick_actions')}
                     </h3>
                     <div className="space-y-3">
                         <button className="w-full flex items-center gap-3 p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors">
                             <ShoppingCartIcon className="w-5 h-5" />
-                            <span className="font-medium">New Order</span>
+                            <span className="font-medium">{t('dashboard.new_order')}</span>
                         </button>
                         <button className="w-full flex items-center gap-3 p-3 rounded-lg bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors">
                             <UsersIcon className="w-5 h-5" />
-                            <span className="font-medium">Add Customer</span>
+                            <span className="font-medium">{t('dashboard.add_customer')}</span>
                         </button>
                         <button className="w-full flex items-center gap-3 p-3 rounded-lg bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors">
                             <PackageIcon className="w-5 h-5" />
-                            <span className="font-medium">Add Item</span>
+                            <span className="font-medium">{t('dashboard.add_item')}</span>
                         </button>
                         <button className="w-full flex items-center gap-3 p-3 rounded-lg bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors">
                             <TruckIcon className="w-5 h-5" />
-                            <span className="font-medium">Track Shipment</span>
+                            <span className="font-medium">
+                {t('dashboard.track_shipment')}
+              </span>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default DashboardPage;

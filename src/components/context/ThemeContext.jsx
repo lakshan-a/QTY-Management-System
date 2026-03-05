@@ -2,7 +2,7 @@ import React, { useEffect, useState, createContext, useContext } from 'react'
 
 const ThemeContext = createContext()
 
-export function ThemeProvider({ children }) {
+export const ThemeProvider =({ children }) => {
     const [isDark, setIsDark] = useState(() => {
         if (typeof window !== 'undefined') {
             const saved = localStorage.getItem('theme')
