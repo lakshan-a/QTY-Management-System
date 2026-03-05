@@ -1,50 +1,48 @@
-import React, { useEffect, useState, createContext, useContext } from 'react'
+import React, { createContext, useEffect, useState } from "react";
 
-const ThemeContext = createContext()
+// Create Theme Context
+const ThemeContext = createContext({
+    theme: "light",
+    toggleTheme: () => {},
+});
 
-export const ThemeProvider =({ children }) => {
-    const [isDark, setIsDark] = useState(() => {
-        if (typeof window !== 'undefined') {
-            const saved = localStorage.getItem('theme')
-            return (
-                saved === 'dark' ||
-                (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)
-            )
-        }
-        return false
-    })
+// Helper: get initial theme
+const getInitialTheme = () => {
+    if (typeof window === "undefined") return "light";
+
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark" || savedTheme === "light") return savedTheme;
+
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        return "dark";
+    }
+    return "light";
+};
+
+export const ThemeProvider = ({ children }) => {
+    const [theme, setTheme] = useState(getInitialTheme);
 
     useEffect(() => {
-        const root = document.documentElement
-        if (isDark) {
-            root.classList.add('dark')
-            localStorage.setItem('theme', 'dark')
-        } else {
-            root.classList.remove('dark')
-            localStorage.setItem('theme', 'light')
-        }
-    }, [isDark])
+        const root = document.documentElement;
 
-    const toggleTheme = () => setIsDark(!isDark)
+        // Remove existing theme classes
+        root.classList.remove("light", "dark");
+        // Add current theme class
+        root.classList.add(theme);
+
+        // Save to localStorage
+        localStorage.setItem("theme", theme);
+    }, [theme]);
+
+    const toggleTheme = () => {
+        setTheme((prev) => (prev === "light" ? "dark" : "light"));
+    };
 
     return (
-        <ThemeContext.Provider
-            value={{
-                isDark,
-                toggleTheme,
-            }}
-        >
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
             {children}
         </ThemeContext.Provider>
-    )
-}
+    );
+};
 
-export function useTheme() {
-    const context = useContext(ThemeContext)
-    if (!context) {
-        throw new Error('useTheme must be used within a ThemeProvider')
-    }
-    return context
-}
-
-export default ThemeContext
+export default ThemeContext;

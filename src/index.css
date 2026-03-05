@@ -8,86 +8,76 @@
 
 /* END TAILWIND IMPORTS — ALL OTHER CSS MUST GO BELOW THIS LINE */
 
-:root {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f8fafc;
-    --bg-tertiary: #f1f5f9;
-    --bg-card: #ffffff;
-    --bg-sidebar: #1e293b;
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
-    --text-muted: #94a3b8;
-    --border-color: #e2e8f0;
-    --accent-primary: #3b82f6;
-    --accent-hover: #2563eb;
-    --success: #10b981;
-    --warning: #f59e0b;
-    --danger: #ef4444;
-    --info: #06b6d4;
-}
-.dark {
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
-    --bg-tertiary: #334155;
-    --bg-card: #1e293b;
-    --bg-sidebar: #0f172a;
-    --text-primary: #f8fafc;
-    --text-secondary: #cbd5e1;
-    --text-muted: #64748b;
-    --border-color: #334155;
-    --accent-primary: #3b82f6;
-    --accent-hover: #60a5fa;
-}
 * {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
-body {
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
 }
+
 ::-webkit-scrollbar-track {
-    background: var(--bg-tertiary);
+    background: #f1f5f9;
 }
+
+.dark ::-webkit-scrollbar-track {
+    background: #334155;
+}
+
 ::-webkit-scrollbar-thumb {
-    background: var(--text-muted);
+    background: #94a3b8;
     border-radius: 3px;
 }
-::-webkit-scrollbar-thumb:hover {
-    background: var(--text-secondary);
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #64748b;
 }
+
+::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
 /* Mobile utilities */
 .mobile-bottom-safe {
     padding-bottom: env(safe-area-inset-bottom, 0px);
 }
+
 .mobile-top-safe {
     padding-top: env(safe-area-inset-top, 0px);
 }
+
 /* iOS smooth scrolling */
 .scroll-touch {
     -webkit-overflow-scrolling: touch;
 }
+
 /* Prevent pull-to-refresh on mobile */
 html, body {
     overscroll-behavior-y: contain;
 }
+
 /* Safe area insets for fixed elements */
 .safe-bottom {
     padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
 }
+
 .safe-top {
     padding-top: max(0.5rem, env(safe-area-inset-top));
 }
+
 /* Touch-friendly tap highlight */
 @media (hover: none) {
     button, a, [role="button"] {
         -webkit-tap-highlight-color: rgba(59, 130, 246, 0.1);
     }
 }
+
 /* Prevent text selection on mobile nav */
 .no-select {
     -webkit-user-select: none;

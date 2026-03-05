@@ -7,12 +7,12 @@ import {
     GlobeIcon,
     CheckIcon,
 } from 'lucide-react';
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '../context/UseTheme';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage, languages } from '../context/LanguageContext';
 
 const Header = ({ title, onMenuClick, showMenuButton }) => {
-    const { isDark, toggleTheme } = useTheme();
+    const { theme, toggleTheme } = useTheme();
     const { user } = useAuth();
     const { currentLanguage, setLanguage, languageDetails, t } = useLanguage();
     const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
@@ -66,8 +66,8 @@ const Header = ({ title, onMenuClick, showMenuButton }) => {
                     >
                         <GlobeIcon className="w-5 h-5" />
                         <span className="text-xs font-semibold">
-              {languageDetails.shortCode}
-            </span>
+                            {languageDetails.shortCode}
+                        </span>
                     </button>
 
                     {isLangMenuOpen && (
@@ -95,12 +95,13 @@ const Header = ({ title, onMenuClick, showMenuButton }) => {
                     )}
                 </div>
 
+                {/* Theme Toggle Button - Fixed */}
                 <button
                     onClick={toggleTheme}
                     className="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
-                    aria-label={t('header.toggle_theme')}
+                    aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
                 >
-                    {isDark ? (
+                    {theme === 'dark' ? (
                         <SunIcon className="w-5 h-5" />
                     ) : (
                         <MoonIcon className="w-5 h-5" />

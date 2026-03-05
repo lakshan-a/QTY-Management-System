@@ -5,7 +5,6 @@ import { LanguageProvider, useLanguage } from './components/context/LanguageCont
 import DashboardLayout from './components/coman/DashboardLayout';
 import DashboardPage from './components/pages/DashboardPage/DashboardPage';
 import CustomersPage from './components/pages/CustomersPage/CustomersPage';
-import './index.css';
 import LoginPage from "./components/pages/LoginPage/LoginPage.jsx";
 
 const pageTitleKeys = {
