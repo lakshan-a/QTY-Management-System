@@ -6,6 +6,7 @@ import DashboardLayout from './components/coman/DashboardLayout';
 import DashboardPage from './components/pages/DashboardPage/DashboardPage';
 import CustomersPage from './components/pages/CustomersPage/CustomersPage';
 import LoginPage from "./components/pages/LoginPage/LoginPage.jsx";
+import CategoriesPage from "./components/pages/CategoriesPage/CategoriesPage.jsx";
 
 const pageTitleKeys = {
     dashboard: 'nav.dashboard',
@@ -46,6 +47,8 @@ function AppContent() {
                 return <DashboardPage />;
             case 'customers':
                 return <CustomersPage />;
+            case 'categories':
+                return <CategoriesPage />
             default:
                 return <DashboardPage />;
         }
