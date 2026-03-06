@@ -9,6 +9,7 @@ import LoginPage from "./components/pages/LoginPage/LoginPage.jsx";
 import CategoriesPage from "./components/pages/CategoriesPage/CategoriesPage.jsx";
 import ItemsPage from "./components/pages/ItemsPage/ItemsPage.jsx";
 import WholesalePage from "./components/pages/WholesalePage/WholesalePage.jsx";
+import QtyManagementPage from "./components/pages/QtyManagementPage/QtyManagementPage.jsx";
 
 const pageTitleKeys = {
     dashboard: 'nav.dashboard',
@@ -55,6 +56,10 @@ function AppContent() {
                 return <ItemsPage />
             case 'wholesale':
                 return <WholesalePage />
+            case 'couriers':
+                return <CouriersPage />
+            case 'qty-management':
+                return <QtyManagementPage />
             default:
                 return <DashboardPage />;
         }
