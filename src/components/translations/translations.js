@@ -241,6 +241,8 @@ export const translations = {
         'returns.submit_request': 'Submit Request',
         'returns.order': 'Order',
         'returns.refund': 'Refund',
+        'returns.delete_confirmation_title': 'Delete Return',
+        'returns.delete_confirmation_message': 'Are you sure you want to delete return',
 
         // Damages
         'damages.title': 'Damages',
@@ -542,6 +544,8 @@ export const translations = {
         'returns.submit_request': 'ඉල්ලීම ඉදිරිපත් කරන්න',
         'returns.order': 'ඇණවුම',
         'returns.refund': 'ආපසු ගෙවීම',
+        'returns.delete_confirmation_title': 'ආපසු ලැබීම මකන්න',
+        'returns.delete_confirmation_message': 'ඔබට ආපසු ලැබීම මකා දැමීමට අවශ්‍යද',
 
         // Damages
         'damages.title': 'හානි',
@@ -843,6 +847,8 @@ export const translations = {
         'returns.submit_request': 'கோரிக்கையை சமர்ப்பி',
         'returns.order': 'ஆர்டர்',
         'returns.refund': 'பணத்தைத் திரும்பப்பெறுதல்',
+        'returns.delete_confirmation_title': 'திருப்பி அனுப்புதலை நீக்கவும்',
+        'returns.delete_confirmation_message': 'திருப்பி அனுப்புதலை நீக்க விரும்புகிறீர்களா',
 
         // Damages
         'damages.title': 'சேதங்கள்',
