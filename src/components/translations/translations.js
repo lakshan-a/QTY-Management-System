@@ -188,6 +188,11 @@ export const translations = {
         'payments.order_number': 'Order #',
         'payments.payment_date': 'Payment Date',
         'payments.verified_by': 'Verified By',
+        'payments.delete_payment': 'Delete Payment',
+        'payments.cancel': 'Cancel',
+        'payments.confirm_delete': 'Confirm Delete',
+        'payments.delete_confirmation': 'Are you sure you want to delete this payment?',
+        'payments.delete_warning': 'This action cannot be undone.',
 
         // Couriers
         'couriers.title': 'Couriers',
@@ -491,6 +496,11 @@ export const translations = {
         'payments.order_number': 'ඇණවුම් අංකය',
         'payments.payment_date': 'ගෙවීම් දිනය',
         'payments.verified_by': 'සත්‍යාපනය කළේ',
+        'payments.delete_payment': 'ගෙවීම මකන්න',
+        'payments.cancel': 'අවලංගු කරන්න',
+        'payments.confirm_delete': 'මකා දැමීම තහවුරු කරන්න',
+        'payments.delete_confirmation': 'ඔබට මෙම ගෙවීයාම මකා දැමීමට විශ්වාසද?',
+        'payments.delete_warning': 'මෙම ක්‍රියාව ආපසු හැරවිය නොහැක.',
 
         // Couriers
         'couriers.title': 'කුරියර්',
@@ -794,6 +804,11 @@ export const translations = {
         'payments.order_number': 'ஆர்டர் எண்',
         'payments.payment_date': 'கொடுப்பனவு தேதி',
         'payments.verified_by': 'சரிபார்த்தவர்',
+        'payments.delete_payment': 'கட்டணத்தை நீக்கு',
+        'payments.cancel': 'ரத்துசெய்',
+        'payments.confirm_delete': 'நீக்குதலை உறுதிப்படுத்து',
+        'payments.delete_confirmation': 'இந்த கட்டணத்தை நீக்க விரும்புகிறீர்களா?',
+        'payments.delete_warning': 'இந்த செயலை மீளமைக்க முடியாது.',
 
         // Couriers
         'couriers.title': 'கூரியர்கள்',
