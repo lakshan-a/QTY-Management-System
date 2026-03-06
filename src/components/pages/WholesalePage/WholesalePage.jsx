@@ -380,7 +380,7 @@ const WholesalePage = () => {
                                     <XIcon className="w-5 h-5" />
                                 </button>
                             </div>
-                            <div className="p-4 overflow-y-auto max-h-[calc(90vh-140px)] space-y-4">
+                            <div className="p-4 overflow-y-auto max-h-[calc(80vh-140px)] space-y-4">
                                 <div>
                                     <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
                                         {t('wholesale.id')}
