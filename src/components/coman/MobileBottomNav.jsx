@@ -40,7 +40,7 @@ const MobileBottomNav = ({
 
     return (
         <nav
-            className="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 lg:hidden safe-bottom"
+            className="fixed bottom-[-10px] left-0 right-0 z-30 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 lg:hidden safe-bottom"
             role="navigation"
             aria-label="Mobile navigation"
         >

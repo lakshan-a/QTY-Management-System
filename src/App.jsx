@@ -10,6 +10,7 @@ import CategoriesPage from "./components/pages/CategoriesPage/CategoriesPage.jsx
 import ItemsPage from "./components/pages/ItemsPage/ItemsPage.jsx";
 import WholesalePage from "./components/pages/WholesalePage/WholesalePage.jsx";
 import QtyManagementPage from "./components/pages/QtyManagementPage/QtyManagementPage.jsx";
+import CouriersPage from "./components/pages/CouriersPage/CouriersPage.jsx";
 
 const pageTitleKeys = {
     dashboard: 'nav.dashboard',
@@ -32,6 +33,7 @@ const pageTitleKeys = {
     subscriptions: 'nav.subscriptions',
     'super-reports': 'nav.reports',
 };
+
 
 function AppContent() {
     const { isAuthenticated, user } = useAuth();
