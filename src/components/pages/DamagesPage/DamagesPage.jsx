@@ -253,25 +253,25 @@ const DamagesPage = () => {
                                             <AlertTriangleIcon className="w-5 h-5 text-red-600 dark:text-red-400" />
                                         </div>
                                         <span className="font-medium text-slate-900 dark:text-white">
-                      {d.item_name}
-                    </span>
+                                          {d.item_name}
+                                        </span>
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <button
                                             onClick={() => handleView(d)}
-                                            className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"
+                                            className="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg"
                                         >
                                             <EyeIcon className="w-4 h-4" />
                                         </button>
                                         <button
                                             onClick={() => handleEdit(d)}
-                                            className="p-2 text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-lg"
+                                            className="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg"
                                         >
                                             <EditIcon className="w-4 h-4" />
                                         </button>
                                         <button
                                             onClick={() => handleDeleteClick(d)}
-                                            className="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg"
+                                            className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg"
                                         >
                                             <TrashIcon className="w-4 h-4" />
                                         </button>
@@ -279,44 +279,44 @@ const DamagesPage = () => {
                                 </div>
                                 <div className="grid grid-cols-2 gap-2 text-sm">
                                     <div>
-                    <span className="text-slate-500 text-xs block">
-                      {t('damages.quantity')}
-                    </span>
+                                        <span className="text-slate-500 text-xs block">
+                                          {t('damages.quantity')}
+                                        </span>
                                         <span className="font-medium text-red-600 dark:text-red-400">
-                      {d.quantity}
-                    </span>
+                                          {d.quantity}
+                                        </span>
                                     </div>
                                     <div>
-                    <span className="text-slate-500 text-xs block">
-                      {t('damages.item_code')}
-                    </span>
+                                        <span className="text-slate-500 text-xs block">
+                                          {t('damages.item_code')}
+                                        </span>
                                         <span className="text-slate-700 dark:text-slate-300 font-mono text-xs">
-                      {getItemCode(d.item_id)}
-                    </span>
+                                          {getItemCode(d.item_id)}
+                                        </span>
                                     </div>
                                     <div>
-                    <span className="text-slate-500 text-xs block">
-                      {t('damages.reported_date')}
-                    </span>
+                                        <span className="text-slate-500 text-xs block">
+                                          {t('damages.reported_date')}
+                                        </span>
                                         <span className="text-slate-700 dark:text-slate-300">
-                      {new Date(d.createdAt).toLocaleDateString()}
-                    </span>
+                                          {new Date(d.createdAt).toLocaleDateString()}
+                                        </span>
                                     </div>
                                     <div className="col-span-2">
-                    <span className="text-slate-500 text-xs block">
-                      {t('damages.reason')}
-                    </span>
+                                        <span className="text-slate-500 text-xs block">
+                                          {t('damages.reason')}
+                                        </span>
                                         <span className="text-slate-700 dark:text-slate-300">
-                      {d.reason}
-                    </span>
+                                          {d.reason}
+                                        </span>
                                     </div>
                                     <div className="col-span-2">
-                    <span className="text-slate-500 text-xs block">
-                      {t('damages.reported_by')}
-                    </span>
+                                        <span className="text-slate-500 text-xs block">
+                                          {t('damages.reported_by')}
+                                        </span>
                                         <span className="text-slate-700 dark:text-slate-300">
-                      {d.reported_by}
-                    </span>
+                                          {d.reported_by}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -461,7 +461,7 @@ const DamagesPage = () => {
                                     <XIcon className="w-5 h-5" />
                                 </button>
                             </div>
-                            <div className="p-4 space-y-4">
+                            <div className="p-4 overflow-y-auto max-h-[calc(80vh-140px)] space-y-4">
                                 <div>
                                     <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
                                         {t('damages.item')}
@@ -663,7 +663,7 @@ const DamagesPage = () => {
                                     onClick={() => setIsViewModalOpen(false)}
                                     className="w-full px-4 py-2 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition-colors"
                                 >
-                                    {t('common.close')}
+                                    {t('common.cancel')}
                                 </button>
                             </div>
                         </div>
