@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     EyeIcon,
     CheckIcon,
@@ -380,7 +380,7 @@ const PaymentsPage = () => {
                                     key={p.payment_id}
                                     className="hover:bg-slate-50 dark:hover:bg-slate-700/50"
                                 >
-                                    <td className="px-4 py-3 text-sm text-slate-500 font-mono">
+                                    <td className="px-4 py-3 text-sm text-slate-900 dark:text-white">
                                         {p.payment_id}
                                     </td>
                                     <td className="px-4 py-3 text-sm text-slate-900 dark:text-white">

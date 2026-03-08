@@ -13,6 +13,7 @@ import QtyManagementPage from "./components/pages/QtyManagementPage/QtyManagemen
 import CouriersPage from "./components/pages/CouriersPage/CouriersPage.jsx";
 import ReturnsPage from "./components/pages/ReturnsPage/ReturnsPage.jsx";
 import PaymentsPage from "./components/pages/PaymentsPage/PaymentsPage.jsx";
+import DamagesPage from "./components/pages/DamagesPage/DamagesPage.jsx";
 
 const pageTitleKeys = {
     dashboard: 'nav.dashboard',
@@ -68,6 +69,8 @@ function AppContent() {
                 return <ReturnsPage />
             case 'payments':
                 return <PaymentsPage />
+            case 'damages':
+                return <DamagesPage />
             default:
                 return <DashboardPage />;
         }

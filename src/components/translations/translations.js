@@ -265,6 +265,9 @@ export const translations = {
         'damages.item_code': 'Item Code',
         'damages.item': 'Item',
         'damages.report': 'Report',
+        'damages.details' : 'Damages Details',
+        'common.last_updated' : 'Last Updated',
+        'damages.delete_confirmation' : 'Damages Delete Confirmation',
 
         // Settings
         'settings.title': 'Settings',
@@ -573,6 +576,9 @@ export const translations = {
         'damages.item_code': 'අයිතම කේතය',
         'damages.item': 'අයිතමය',
         'damages.report': 'වාර්තා කරන්න',
+        'damages.details': 'හානි පිළිබඳ විස්තර',
+        'common.last_updated': 'අවසන් යාවත්කාලීන කිරීම',
+        'damages.delete_confirmation': 'හානි මකාදැමීමේ තහවුරු කිරීම',
 
         // Settings
         'settings.title': 'සැකසුම්',
@@ -881,6 +887,9 @@ export const translations = {
         'damages.item_code': 'பொருள் குறியீடு',
         'damages.item': 'பொருள்',
         'damages.report': 'அறிவி',
+        'damages.details': 'சேதங்களின் விவரங்கள்',
+        'common.last_updated': 'கடைசியாக புதுப்பிக்கப்பட்டது',
+        'damages.delete_confirmation': 'சேதங்கள் நீக்குதல் உறுதிப்படுத்தல்',
 
         // Settings
         'settings.title': 'அமைப்புகள்',
