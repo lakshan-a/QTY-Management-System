@@ -15,6 +15,7 @@ import ReturnsPage from "./components/pages/ReturnsPage/ReturnsPage.jsx";
 import PaymentsPage from "./components/pages/PaymentsPage/PaymentsPage.jsx";
 import DamagesPage from "./components/pages/DamagesPage/DamagesPage.jsx";
 import UsersPage from "./components/pages/UsersPage/UsersPage.jsx";
+import ReportsPage from "./components/pages/ReportsPage/ReportsPage.jsx";
 
 const pageTitleKeys = {
     dashboard: 'nav.dashboard',
@@ -74,6 +75,10 @@ function AppContent() {
                 return <DamagesPage />
             case 'users':
                 return <UsersPage />
+            case 'reports':
+                return <ReportsPage />
+            case 'settings':
+                return <SettingsPage />
             default:
                 return <DashboardPage />;
         }
