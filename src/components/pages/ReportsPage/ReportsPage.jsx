@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react'
 import {
     DownloadIcon,
     TrendingUpIcon,
@@ -8,14 +8,15 @@ import {
     ShoppingCartIcon,
     UsersIcon,
     AlertTriangleIcon,
-} from 'lucide-react';
+} from 'lucide-react'
+import { useLanguage } from '../../context/LanguageContext'
 
 // Helper to create dates relative to today
 function daysAgo(days) {
-    const d = new Date();
-    d.setDate(d.getDate() - days);
-    d.setHours(10, 0, 0, 0);
-    return d;
+    const d = new Date()
+    d.setDate(d.getDate() - days)
+    d.setHours(10, 0, 0, 0)
+    return d
 }
 
 const mockOrders = [
@@ -214,7 +215,7 @@ const mockOrders = [
         ],
         createdAt: daysAgo(90),
     },
-];
+]
 
 const mockItems = [
     {
@@ -280,7 +281,7 @@ const mockItems = [
         selling_price: 49.99,
         status: 'active',
     },
-];
+]
 
 const mockCustomers = [
     {
@@ -337,48 +338,47 @@ const mockCustomers = [
         total_spent: 240.5,
         createdAt: daysAgo(90),
     },
-];
+]
 
 function getDateFilter(range) {
-    const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
+    const now = new Date()
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
     switch (range) {
         case 'today':
-            return (d) => d >= today;
+            return (d) => d >= today
         case 'this_week': {
-            const weekStart = new Date(today);
-            weekStart.setDate(today.getDate() - today.getDay());
-            return (d) => d >= weekStart;
+            const weekStart = new Date(today)
+            weekStart.setDate(today.getDate() - today.getDay())
+            return (d) => d >= weekStart
         }
         case 'this_month':
             return (d) =>
-                d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+                d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()
         case 'last_month': {
-            const lm = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-            const lmEnd = new Date(now.getFullYear(), now.getMonth(), 0);
-            return (d) => d >= lm && d <= lmEnd;
+            const lm = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+            const lmEnd = new Date(now.getFullYear(), now.getMonth(), 0)
+            return (d) => d >= lm && d <= lmEnd
         }
         case 'this_year':
-            return (d) => d.getFullYear() === now.getFullYear();
+            return (d) => d.getFullYear() === now.getFullYear()
         default:
-            return () => true;
+            return () => true
     }
 }
 
 function exportCSV(headers, rows, filename) {
     const csvContent = [headers.join(','), ...rows.map((r) => r.join(','))].join(
         '\n',
-    );
+    )
     const blob = new Blob([csvContent], {
         type: 'text/csv;charset=utf-8;',
-    });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${filename}.csv`;
-    link.click();
-    URL.revokeObjectURL(url);
+    })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `${filename}.csv`
+    link.click()
+    URL.revokeObjectURL(url)
 }
 
 function StatCard({
@@ -414,24 +414,25 @@ function StatCard({
                 <div className={`${color} p-3 rounded-lg text-white`}>{icon}</div>
             </div>
         </div>
-    );
+    )
 }
 
 const ReportsPage = () => {
-    const [dateRange, setDateRange] = useState('this_year');
-    const [reportType, setReportType] = useState('sales');
+    const { t } = useLanguage()
+    const [dateRange, setDateRange] = useState('this_year')
+    const [reportType, setReportType] = useState('sales')
 
-    const dateFilter = useMemo(() => getDateFilter(dateRange), [dateRange]);
+    const dateFilter = useMemo(() => getDateFilter(dateRange), [dateRange])
 
     const filteredOrders = useMemo(
         () => mockOrders.filter((o) => dateFilter(o.createdAt)),
         [dateFilter],
-    );
+    )
 
     const filteredCustomers = useMemo(
         () => mockCustomers.filter((c) => dateFilter(c.createdAt)),
         [dateFilter],
-    );
+    )
 
     const handleExport = () => {
         if (reportType === 'sales') {
@@ -446,7 +447,7 @@ const ReportsPage = () => {
                     o.createdAt.toLocaleDateString(),
                 ]),
                 'sales-report',
-            );
+            )
         } else if (reportType === 'inventory') {
             exportCSV(
                 ['Item', 'Category', 'Stock', 'Cost', 'Price', 'Status'],
@@ -459,7 +460,7 @@ const ReportsPage = () => {
                     i.status,
                 ]),
                 'inventory-report',
-            );
+            )
         } else if (reportType === 'customers') {
             exportCSV(
                 ['Name', 'Email', 'City', 'Orders', 'Total Spent'],
@@ -471,7 +472,7 @@ const ReportsPage = () => {
                     c.total_spent.toFixed(2),
                 ]),
                 'customers-report',
-            );
+            )
         } else {
             exportCSV(
                 [
@@ -493,33 +494,33 @@ const ReportsPage = () => {
                     o.createdAt.toLocaleDateString(),
                 ]),
                 'orders-report',
-            );
+            )
         }
-    };
+    }
 
     // Sales calculations
-    const totalRevenue = filteredOrders.reduce((s, o) => s + o.total_amount, 0);
-    const totalOrders = filteredOrders.length;
-    const avgOrderValue = totalOrders > 0 ? totalRevenue / totalOrders : 0;
+    const totalRevenue = filteredOrders.reduce((s, o) => s + o.total_amount, 0)
+    const totalOrders = filteredOrders.length
+    const avgOrderValue = totalOrders > 0 ? totalRevenue / totalOrders : 0
     const productsSold = filteredOrders.reduce(
         (s, o) => s + o.items.reduce((si, i) => si + i.quantity, 0),
         0,
-    );
+    )
 
     // Product aggregation
-    const productMap = new Map();
+    const productMap = new Map()
     filteredOrders.forEach((o) =>
         o.items.forEach((i) => {
             const existing = productMap.get(i.name) || {
                 sales: 0,
                 revenue: 0,
-            };
+            }
             productMap.set(i.name, {
                 sales: existing.sales + i.quantity,
                 revenue: existing.revenue + i.revenue,
-            });
+            })
         }),
-    );
+    )
 
     const topProducts = Array.from(productMap.entries())
         .map(([name, data]) => ({
@@ -527,30 +528,30 @@ const ReportsPage = () => {
             ...data,
         }))
         .sort((a, b) => b.revenue - a.revenue)
-        .slice(0, 5);
+        .slice(0, 5)
 
     // Category aggregation
-    const categoryMap = new Map();
+    const categoryMap = new Map()
     filteredOrders.forEach((o) => {
         const existing = categoryMap.get(o.category) || {
             orders: 0,
             revenue: 0,
-        };
+        }
         categoryMap.set(o.category, {
             orders: existing.orders + 1,
             revenue: existing.revenue + o.total_amount,
-        });
-    });
+        })
+    })
 
     const categoryData = Array.from(categoryMap.entries())
         .map(([name, data]) => ({
             name,
             ...data,
         }))
-        .sort((a, b) => b.revenue - a.revenue);
+        .sort((a, b) => b.revenue - a.revenue)
 
     // Monthly sales
-    const monthlyMap = new Map();
+    const monthlyMap = new Map()
     const months = [
         'Jan',
         'Feb',
@@ -564,66 +565,65 @@ const ReportsPage = () => {
         'Oct',
         'Nov',
         'Dec',
-    ];
+    ]
 
     filteredOrders.forEach((o) => {
-        const key = months[o.createdAt.getMonth()];
-        monthlyMap.set(key, (monthlyMap.get(key) || 0) + o.total_amount);
-    });
+        const key = months[o.createdAt.getMonth()]
+        monthlyMap.set(key, (monthlyMap.get(key) || 0) + o.total_amount)
+    })
 
     const monthlySales = months
         .filter((m) => monthlyMap.has(m))
         .map((m) => ({
             month: m,
             sales: monthlyMap.get(m) || 0,
-        }));
+        }))
 
     // Inventory calculations
-    const totalItems = mockItems.length;
+    const totalItems = mockItems.length
     const lowStockItems = mockItems.filter(
         (i) => i.stock_quantity > 0 && i.stock_quantity < 10,
-    );
-    const outOfStock = mockItems.filter((i) => i.stock_quantity === 0);
+    )
+    const outOfStock = mockItems.filter((i) => i.stock_quantity === 0)
     const totalInventoryValue = mockItems.reduce(
         (s, i) => s + i.cost_price * i.stock_quantity,
         0,
-    );
+    )
 
     // Customer calculations
-    const totalCustomers = filteredCustomers.length;
-    const now = new Date();
+    const totalCustomers = filteredCustomers.length
+    const now = new Date()
     const newThisMonth = filteredCustomers.filter(
         (c) =>
             c.createdAt.getMonth() === now.getMonth() &&
             c.createdAt.getFullYear() === now.getFullYear(),
-    ).length;
+    ).length
 
-    const cityMap = new Map();
+    const cityMap = new Map()
     filteredCustomers.forEach((c) =>
         cityMap.set(c.city, (cityMap.get(c.city) || 0) + 1),
-    );
-
+    )
     const topCity =
-        Array.from(cityMap.entries()).sort((a, b) => b[1] - a[1])[0]?.[0] || 'N/A';
+        Array.from(cityMap.entries()).sort((a, b) => b[1] - a[1])[0]?.[0] || 'N/A'
 
     const customerAvgSpent =
         totalCustomers > 0
             ? filteredCustomers.reduce((s, c) => s + c.total_spent, 0) /
             totalCustomers
-            : 0;
+            : 0
 
     // Order status breakdown
-    const statusBreakdown = new Map();
+    const statusBreakdown = new Map()
     filteredOrders.forEach((o) =>
         statusBreakdown.set(o.status, (statusBreakdown.get(o.status) || 0) + 1),
-    );
+    )
 
     const codCount = filteredOrders.filter(
         (o) => o.payment_method === 'cod',
-    ).length;
+    ).length
     const bankCount = filteredOrders.filter(
         (o) => o.payment_method === 'bank_transfer',
-    ).length;
+    ).length
 
     const statusColors = {
         pending:
@@ -634,7 +634,7 @@ const ReportsPage = () => {
         delivered:
             'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400',
         returned: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
-    };
+    }
 
     return (
         <div className="space-y-6">
@@ -647,21 +647,21 @@ const ReportsPage = () => {
                             onChange={(e) => setReportType(e.target.value)}
                             className="w-full sm:w-48 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
-                            <option value="sales">Sales Report</option>
-                            <option value="inventory">Inventory Report</option>
-                            <option value="customers">Customer Report</option>
-                            <option value="orders">Orders Report</option>
+                            <option value="sales">{t('reports.sales_report')}</option>
+                            <option value="inventory">{t('reports.inventory_report')}</option>
+                            <option value="customers">{t('reports.customer_report')}</option>
+                            <option value="orders">{t('reports.orders_report')}</option>
                         </select>
                         <select
                             value={dateRange}
                             onChange={(e) => setDateRange(e.target.value)}
                             className="w-full sm:w-48 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
-                            <option value="today">Today</option>
-                            <option value="this_week">This Week</option>
-                            <option value="this_month">This Month</option>
-                            <option value="last_month">Last Month</option>
-                            <option value="this_year">This Year</option>
+                            <option value="today">{t('reports.today')}</option>
+                            <option value="this_week">{t('reports.this_week')}</option>
+                            <option value="this_month">{t('reports.this_month')}</option>
+                            <option value="last_month">{t('reports.last_month')}</option>
+                            <option value="this_year">{t('reports.this_year')}</option>
                         </select>
                     </div>
                     <button
@@ -669,7 +669,7 @@ const ReportsPage = () => {
                         className="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition-colors"
                     >
                         <DownloadIcon className="w-4 h-4 mr-2" />
-                        Export CSV
+                        {t('reports.export_csv')}
                     </button>
                 </div>
             </div>
@@ -679,44 +679,44 @@ const ReportsPage = () => {
                 <>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <StatCard
-                            label="Total Revenue"
+                            label={t('reports.total_revenue')}
                             value={`$${totalRevenue.toLocaleString(undefined, {
                                 minimumFractionDigits: 2,
                             })}`}
                             icon={<DollarSignIcon className="w-6 h-6" />}
                             color="bg-emerald-500"
                             trend={{
-                                value: '12.5% vs last period',
+                                value: `12.5% ${t('reports.vs_last_period')}`,
                                 up: true,
                             }}
                         />
                         <StatCard
-                            label="Total Orders"
+                            label={t('reports.total_orders')}
                             value={totalOrders.toLocaleString()}
                             icon={<ShoppingCartIcon className="w-6 h-6" />}
                             color="bg-blue-500"
                             trend={{
-                                value: '8.2% vs last period',
+                                value: `8.2% ${t('reports.vs_last_period')}`,
                                 up: true,
                             }}
                         />
                         <StatCard
-                            label="Avg Order Value"
+                            label={t('reports.avg_order_value')}
                             value={`$${avgOrderValue.toFixed(2)}`}
                             icon={<TrendingUpIcon className="w-6 h-6" />}
                             color="bg-purple-500"
                             trend={{
-                                value: '3.1% vs last period',
+                                value: `3.1% ${t('reports.vs_last_period')}`,
                                 up: true,
                             }}
                         />
                         <StatCard
-                            label="Products Sold"
+                            label={t('reports.products_sold')}
                             value={productsSold.toLocaleString()}
                             icon={<PackageIcon className="w-6 h-6" />}
                             color="bg-cyan-500"
                             trend={{
-                                value: '5.4% vs last period',
+                                value: `5.4% ${t('reports.vs_last_period')}`,
                                 up: true,
                             }}
                         />
@@ -726,19 +726,19 @@ const ReportsPage = () => {
                         {/* Monthly Sales Chart */}
                         <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6">
                             <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
-                                Monthly Sales
+                                {t('reports.monthly_sales')}
                             </h3>
                             <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-                                Revenue trend
+                                {t('reports.revenue_trend')}
                             </p>
                             {monthlySales.length > 0 ? (
                                 <div className="h-64 flex items-end justify-between gap-2 pt-6">
                                     {monthlySales.map((data) => {
                                         const maxSales = Math.max(
                                             ...monthlySales.map((d) => d.sales),
-                                        );
+                                        )
                                         const height =
-                                            maxSales > 0 ? (data.sales / maxSales) * 100 : 0;
+                                            maxSales > 0 ? (data.sales / maxSales) * 100 : 0
                                         return (
                                             <div
                                                 key={data.month}
@@ -757,12 +757,12 @@ const ReportsPage = () => {
                           {data.month}
                         </span>
                                             </div>
-                                        );
+                                        )
                                     })}
                                 </div>
                             ) : (
                                 <div className="h-64 flex items-center justify-center text-slate-400">
-                                    No data for selected period
+                                    {t('reports.no_data')}
                                 </div>
                             )}
                         </div>
@@ -770,15 +770,15 @@ const ReportsPage = () => {
                         {/* Top Products */}
                         <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6">
                             <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
-                                Top Products
+                                {t('reports.top_products')}
                             </h3>
                             <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-                                Best selling products
+                                {t('reports.best_selling')}
                             </p>
                             <div className="space-y-4 pt-4">
                                 {topProducts.length === 0 ? (
                                     <p className="text-center text-slate-400 py-8">
-                                        No data for selected period
+                                        {t('reports.no_data')}
                                     </p>
                                 ) : (
                                     topProducts.map((product, index) => (
@@ -797,7 +797,7 @@ const ReportsPage = () => {
                                                         {product.name}
                                                     </p>
                                                     <p className="text-sm text-slate-500">
-                                                        {product.sales} units sold
+                                                        {product.sales} {t('reports.units_sold')}
                                                     </p>
                                                 </div>
                                             </div>
@@ -818,7 +818,7 @@ const ReportsPage = () => {
                     <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
                         <div className="p-6 border-b border-slate-200 dark:border-slate-700">
                             <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
-                                Sales by Category
+                                {t('reports.sales_by_category')}
                             </h3>
                         </div>
                         <div className="overflow-x-auto">
@@ -826,16 +826,16 @@ const ReportsPage = () => {
                                 <thead>
                                 <tr className="border-b border-slate-200 dark:border-slate-700">
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">
-                                        Category
+                                        {t('reports.category')}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">
-                                        Orders
+                                        {t('reports.orders')}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">
-                                        Revenue
+                                        {t('reports.revenue')}
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase">
-                                        % of Total
+                                        {t('reports.percent_total')}
                                     </th>
                                 </tr>
                                 </thead>
@@ -889,25 +889,25 @@ const ReportsPage = () => {
                 <>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <StatCard
-                            label="Total Items"
+                            label={t('reports.total_items')}
                             value={totalItems.toString()}
                             icon={<PackageIcon className="w-6 h-6" />}
                             color="bg-blue-500"
                         />
                         <StatCard
-                            label="Low Stock"
+                            label={t('reports.low_stock')}
                             value={lowStockItems.length.toString()}
                             icon={<AlertTriangleIcon className="w-6 h-6" />}
                             color="bg-amber-500"
                         />
                         <StatCard
-                            label="Out of Stock"
+                            label={t('reports.out_of_stock')}
                             value={outOfStock.length.toString()}
                             icon={<AlertTriangleIcon className="w-6 h-6" />}
                             color="bg-red-500"
                         />
                         <StatCard
-                            label="Inventory Value"
+                            label={t('reports.inventory_value')}
                             value={`$${totalInventoryValue.toLocaleString()}`}
                             icon={<DollarSignIcon className="w-6 h-6" />}
                             color="bg-emerald-500"
@@ -917,7 +917,7 @@ const ReportsPage = () => {
                     {lowStockItems.length > 0 && (
                         <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-6">
                             <h3 className="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-3">
-                                ⚠️ Low Stock Alerts
+                                ⚠️ {t('reports.low_stock_alerts')}
                             </h3>
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                                 {lowStockItems.map((item) => (
@@ -929,7 +929,10 @@ const ReportsPage = () => {
                                             {item.item_name}
                                         </p>
                                         <p className="text-sm text-red-600 font-medium">
-                                            Only {item.stock_quantity} left
+                                            {t('reports.only_left').replace(
+                                                '{0}',
+                                                item.stock_quantity.toString(),
+                                            )}
                                         </p>
                                     </div>
                                 ))}
@@ -940,7 +943,7 @@ const ReportsPage = () => {
                     <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
                         <div className="p-6 border-b border-slate-200 dark:border-slate-700">
                             <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
-                                All Items
+                                {t('reports.all_items')}
                             </h3>
                         </div>
                         <div className="overflow-x-auto">
@@ -948,22 +951,22 @@ const ReportsPage = () => {
                                 <thead>
                                 <tr className="border-b border-slate-200 dark:border-slate-700">
                                     <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
-                                        Item
+                                        {t('reports.item')}
                                     </th>
                                     <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
-                                        Category
+                                        {t('reports.category')}
                                     </th>
                                     <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
-                                        Stock
+                                        {t('reports.stock')}
                                     </th>
                                     <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
-                                        Cost
+                                        {t('reports.cost')}
                                     </th>
                                     <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
-                                        Price
+                                        {t('reports.price')}
                                     </th>
                                     <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
-                                        Status
+                                        {t('reports.status_col')}
                                     </th>
                                 </tr>
                                 </thead>
@@ -994,7 +997,7 @@ const ReportsPage = () => {
                         <span
                             className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${item.status === 'active' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 'bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-300'}`}
                         >
-                          {item.status}
+                          {t(`users.${item.status}`)}
                         </span>
                                         </td>
                                     </tr>
@@ -1011,25 +1014,25 @@ const ReportsPage = () => {
                 <>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <StatCard
-                            label="Total Customers"
+                            label={t('reports.total_customers')}
                             value={totalCustomers.toString()}
                             icon={<UsersIcon className="w-6 h-6" />}
                             color="bg-blue-500"
                         />
                         <StatCard
-                            label="New This Month"
+                            label={t('reports.new_this_month')}
                             value={newThisMonth.toString()}
                             icon={<UsersIcon className="w-6 h-6" />}
                             color="bg-emerald-500"
                         />
                         <StatCard
-                            label="Top City"
+                            label={t('reports.top_city')}
                             value={topCity}
                             icon={<TrendingUpIcon className="w-6 h-6" />}
                             color="bg-purple-500"
                         />
                         <StatCard
-                            label="Avg Spend"
+                            label={t('reports.avg_spend')}
                             value={`$${customerAvgSpent.toFixed(2)}`}
                             icon={<DollarSignIcon className="w-6 h-6" />}
                             color="bg-cyan-500"
@@ -1040,7 +1043,7 @@ const ReportsPage = () => {
                         <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
                             <div className="p-6 border-b border-slate-200 dark:border-slate-700">
                                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
-                                    Top Customers
+                                    {t('reports.top_customers')}
                                 </h3>
                             </div>
                             <div className="overflow-x-auto">
@@ -1048,13 +1051,13 @@ const ReportsPage = () => {
                                     <thead>
                                     <tr className="border-b border-slate-200 dark:border-slate-700">
                                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
-                                            Name
+                                            {t('reports.name')}
                                         </th>
                                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
-                                            Orders
+                                            {t('reports.orders')}
                                         </th>
                                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
-                                            Spent
+                                            {t('reports.spent')}
                                         </th>
                                     </tr>
                                     </thead>
@@ -1087,7 +1090,7 @@ const ReportsPage = () => {
 
                         <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6">
                             <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
-                                Customers by City
+                                {t('reports.customers_by_city')}
                             </h3>
                             <div className="space-y-4">
                                 {Array.from(cityMap.entries())
@@ -1099,7 +1102,7 @@ const ReportsPage = () => {
                           {city}
                         </span>
                                                 <span className="text-sm text-slate-500">
-                          {count} customers
+                          {count} {t('reports.customers_count')}
                         </span>
                                             </div>
                                             <div className="h-3 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
@@ -1123,25 +1126,25 @@ const ReportsPage = () => {
                 <>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <StatCard
-                            label="Total Orders"
+                            label={t('reports.total_orders')}
                             value={totalOrders.toString()}
                             icon={<ShoppingCartIcon className="w-6 h-6" />}
                             color="bg-blue-500"
                         />
                         <StatCard
-                            label="Pending"
+                            label={t('reports.pending')}
                             value={(statusBreakdown.get('pending') || 0).toString()}
                             icon={<PackageIcon className="w-6 h-6" />}
                             color="bg-amber-500"
                         />
                         <StatCard
-                            label="Delivered"
+                            label={t('reports.delivered')}
                             value={(statusBreakdown.get('delivered') || 0).toString()}
                             icon={<PackageIcon className="w-6 h-6" />}
                             color="bg-emerald-500"
                         />
                         <StatCard
-                            label="Returned"
+                            label={t('reports.returned')}
                             value={(statusBreakdown.get('returned') || 0).toString()}
                             icon={<AlertTriangleIcon className="w-6 h-6" />}
                             color="bg-red-500"
@@ -1151,7 +1154,7 @@ const ReportsPage = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6">
                             <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
-                                Orders by Status
+                                {t('reports.orders_by_status')}
                             </h3>
                             <div className="space-y-3">
                                 {Array.from(statusBreakdown.entries()).map(
@@ -1164,7 +1167,7 @@ const ReportsPage = () => {
                         <span
                             className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium capitalize ${statusColors[status] || 'bg-slate-100 text-slate-700'}`}
                         >
-                          {status}
+                          {t(`reports.${status}`)}
                         </span>
                                             </div>
                                             <div className="flex items-center gap-3">
@@ -1188,16 +1191,16 @@ const ReportsPage = () => {
 
                         <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6">
                             <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
-                                Payment Methods
+                                {t('reports.payment_methods')}
                             </h3>
                             <div className="space-y-6 pt-2">
                                 <div>
                                     <div className="flex justify-between mb-2">
                     <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                      Cash on Delivery
+                      {t('reports.cash_on_delivery')}
                     </span>
                                         <span className="text-sm font-bold text-slate-900 dark:text-white">
-                      {codCount} orders
+                      {codCount} {t('reports.orders').toLowerCase()}
                     </span>
                                     </div>
                                     <div className="h-4 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
@@ -1212,10 +1215,10 @@ const ReportsPage = () => {
                                 <div>
                                     <div className="flex justify-between mb-2">
                     <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                      Bank Transfer
+                      {t('reports.bank_transfer')}
                     </span>
                                         <span className="text-sm font-bold text-slate-900 dark:text-white">
-                      {bankCount} orders
+                      {bankCount} {t('reports.orders').toLowerCase()}
                     </span>
                                     </div>
                                     <div className="h-4 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
@@ -1235,7 +1238,7 @@ const ReportsPage = () => {
                     <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
                         <div className="p-6 border-b border-slate-200 dark:border-slate-700">
                             <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
-                                Recent Orders
+                                {t('reports.recent_orders')}
                             </h3>
                         </div>
                         <div className="overflow-x-auto">
@@ -1243,22 +1246,22 @@ const ReportsPage = () => {
                                 <thead>
                                 <tr className="border-b border-slate-200 dark:border-slate-700">
                                     <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
-                                        Order #
+                                        {t('reports.order_number')}
                                     </th>
                                     <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
-                                        Customer
+                                        {t('reports.customer')}
                                     </th>
                                     <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
-                                        Amount
+                                        {t('reports.amount')}
                                     </th>
                                     <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
-                                        Payment
+                                        {t('reports.payment')}
                                     </th>
                                     <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
-                                        Status
+                                        {t('reports.status_col')}
                                     </th>
                                     <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
-                                        Date
+                                        {t('reports.date')}
                                     </th>
                                 </tr>
                                 </thead>
@@ -1269,7 +1272,7 @@ const ReportsPage = () => {
                                             colSpan={6}
                                             className="px-4 py-8 text-center text-slate-500"
                                         >
-                                            No orders for selected period
+                                            {t('reports.no_orders_period')}
                                         </td>
                                     </tr>
                                 ) : (
@@ -1302,7 +1305,7 @@ const ReportsPage = () => {
                             <span
                                 className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium capitalize ${statusColors[o.status] || ''}`}
                             >
-                              {o.status}
+                              {t(`reports.${o.status}`)}
                             </span>
                                                 </td>
                                                 <td className="px-4 py-3 text-sm text-slate-600 dark:text-slate-300">
@@ -1318,7 +1321,7 @@ const ReportsPage = () => {
                 </>
             )}
         </div>
-    );
-};
+    )
+}
 
-export default ReportsPage;
+export default ReportsPage

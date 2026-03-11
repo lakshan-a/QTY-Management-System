@@ -94,6 +94,8 @@ function AppContent() {
                 return <UsersPage />
             case 'subscriptions':
                 return <SubscriptionsPage />
+            case 'super-reports':
+                return <ReportsPage />
             default:
                 return <DashboardPage />;
         }
