@@ -18,6 +18,7 @@ import UsersPage from "./components/pages/UsersPage/UsersPage.jsx";
 import ReportsPage from "./components/pages/ReportsPage/ReportsPage.jsx";
 import SettingsPage from "./components/pages/SettingsPage/SettingsPage.jsx";
 import OrdersPage from "./components/pages/OrdersPage/OrdersPage.jsx";
+import SuperAdminDashboard from "./components/pages/SuperAdminDashboard/SuperAdminDashboard.jsx";
 
 const pageTitleKeys = {
     dashboard: 'nav.dashboard',
@@ -83,6 +84,8 @@ function AppContent() {
                 return <ReportsPage />
             case 'settings':
                 return <SettingsPage />
+            case 'super-dashboard':
+                return <SuperAdminDashboard />
             default:
                 return <DashboardPage />;
         }
